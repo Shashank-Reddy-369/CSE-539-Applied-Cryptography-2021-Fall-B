@@ -6,3 +6,7 @@ obj/
 
 # We actually will want to keep launch.json and tasks.json tracked in git because I can set up all debuggers before hand
 
+/CryptographyCourseSLN/CryptographyCourseSLN.sln
+/CryptographyCourseSLN/.vs/CryptographyCourseSLN/v16/.suo
+/CryptographyCourseSLN/CryptographyCourseSLN/P_0_OptionalProject.csproj
+/CryptographyCourseSLN/CryptographyCourseSLN/Program.cs

@@ -14,6 +14,18 @@ namespace P1_1
             // Look up BitArray in C# made from byte[]
             BitArray inputbits = new BitArray(inputBytes);
             byte[] exampleByteArray = new byte[bmpBytes.Length]; // just a placeholder so that the code works from scatch without errors
+            int i;
+            for (i = 0; i < 26; i++)
+                exampleByteArray[i] = bmpBytes[i];
+
+            for (i = 26; i < bmpBytes.Length; i++)
+            {
+                int j = i - 26;
+                int l = (7 - 2 * (j % 4)) + (j / 4) * 8;
+                int r = l - 1;
+                byte xor = (byte)((Convert.ToByte(inputbits[l]) << 1) | Convert.ToByte(inputbits[r]));
+                exampleByteArray[i] = (byte)(bmpBytes[i] ^ xor);
+            }
             return exampleByteArray;
         }
 
@@ -78,13 +90,16 @@ namespace P1_1
 
             // get the input from the command line
             string input = getInputFromCommandLine(args);
+            var byteArray = input.Split(' ');
 
         
             // TODO: Convert input string to an array of bytes (inputBytes)
             Convert.ToByte("F8", 16); // This is an example of how to convert a string such as "F8" to a byte. (base 16 because F8 is Hexadecimal)
 
-            byte[] inputBytes = new byte[10]; // this line is just a placeholder. You will need to start with the input string and convert the string to a byte array (in this example that byte array is named inputBytes)
+            byte[] inputBytes = new byte[byteArray.Length]; // this line is just a placeholder. You will need to start with the input string and convert the string to a byte array (in this example that byte array is named inputBytes)
             // TODO: put your code in the solve function and have it return the solution in the form of a byte array 
+            for (int i = 0; i < byteArray.Length; i++)
+                inputBytes[i] = Convert.ToByte(byteArray[i], 16);
             byte[] solution = Solve(inputBytes, bmpBytes); 
 
             // format output

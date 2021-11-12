@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "P2": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C5\""
+    }
+  }
+}

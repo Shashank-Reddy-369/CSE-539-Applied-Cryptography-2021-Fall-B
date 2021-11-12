@@ -27,17 +27,21 @@ namespace P1_2
         // TODO: put your solution code in the solve function and have it return the seed. In the example, the seed returned was 26564295
         private static double Solve(string plaintext, string ciphertext)
         {
-            // Feel free to remove/ keep any of the code in this function. Some of the code is from the instructions.
-            // Helpful code from the instructions:
-            DateTime dt = DateTime.Now;
+            DateTime dt = new DateTime(2020, 3, 7, 11, 0, 0);
             TimeSpan ts = dt.Subtract(new DateTime(1970, 1, 1));
-            // how to cast a TimeSpan to an int
-            // int start = (int)ts.TotalMinutes;
-
-            // string secretString = "";
-            Random rng = new Random((int)ts.TotalMinutes);
-            byte[] key = BitConverter.GetBytes(rng.NextDouble());
-        
+            int start = (int)ts.TotalMinutes;
+            while (true)
+            {
+                Random rng = new Random(start);
+                byte[] key = BitConverter.GetBytes(rng.NextDouble());
+                if (Encrypt(key, plaintext) == ciphertext)
+                {
+                    Console.WriteLine(ts.TotalMinutes);
+                    break;
+                }
+                start++;
+            }
+            return start;
             // Console.WriteLine(Encrypt(key, secretString));
 
             // Hint: We are finding the seed that was used to make the key (and we only return the seed once we find the correct key that was used to encrypt the plaintext)
