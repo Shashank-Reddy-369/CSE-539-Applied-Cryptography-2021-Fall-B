@@ -13,18 +13,48 @@ namespace P4
             * help with extended euclidean algorithm: https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
             * 
             */
+            BigInteger e = 65537;
+            int p_e = int.Parse(args[0]);
+            int p_c = int.Parse(args[1]);
+            int q_e = int.Parse(args[2]);
+            int q_c = int.Parse(args[3]);
+            BigInteger cipherText = BigInteger.Parse(args[4]);
+            BigInteger plainText = BigInteger.Parse(args[5]);
 
-            Console.WriteLine("just printing the input");
-            foreach(var item in args)
-            {
-                Console.WriteLine(item); //DELETE, just a placeholder
-            }
+            BigInteger q = 0, p = 0;
+            q = BigInteger.Subtract(BigInteger.Pow(2, q_e), q_c);
+            p = BigInteger.Subtract(BigInteger.Pow(2, p_e), p_c);
+            BigInteger pi = BigInteger.Multiply(p - 1, q - 1);
+            BigInteger d = Program.Compute(e, pi);
+            BigInteger out1 = BigInteger.ModPow(cipherText, d, p * q);
+            BigInteger out2 = BigInteger.ModPow(plainText, e, p * q);
+            var ans = out1.ToString() + "," + out2.ToString();
+            Console.WriteLine(ans);
+            return ans;
 
             // Some other helpful links: https://gist.github.com/GiveThanksAlways/00a5c4e911795992268b0c998e2ec487
+        }
 
-            // dotnet run 254 1223 251 1339 66536047120374145538916787981868004206438539248910734713495276883724693574434582104900978079701174539167102706725422582788481727619546235440508214694579  1756026041
-            string P4_answer = "Edward Snowden";
-            return P4_answer;
+        public static BigInteger Compute(BigInteger int1, BigInteger int2)
+        {
+            BigInteger output = 0, var1 = 1;
+            BigInteger var2 = 1, var3 = 0;
+            BigInteger a = 0, b = 0;
+            BigInteger c = 0, d = 0;
+            while (int1 != 0)
+            {
+                a = int2 / int1;
+                b = int2 % int1;
+                c = output - var2 * a;
+                d = var1 - var3 * a;
+                int2 = int1;
+                int1 = b;
+                output = var2;
+                var1 = var3;
+                var2 = c;
+                var3 = d;
+            }
+            return output;
         }
 
         static void Main(string[] args)
